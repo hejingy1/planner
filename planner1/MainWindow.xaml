@@ -25,14 +25,16 @@
 
         <TextBox x:Name="InfoTextBox"
          Grid.Row="1" 
-         AllowDrop="True" PreviewDragOver="InfoTextBox_DragOver" 
-         PreviewDragEnter="InfoTextBox_DragEnter" PreviewDrop ="InfoTextBox_Drop"
+         AllowDrop="True"
+         PreviewDragEnter="InfoTextBox_DragEnter" DragEnter="InfoTextBox_DragEnter"
+         PreviewDragOver="InfoTextBox_DragOver" DragOver="InfoTextBox_DragOver"
+         Drop="InfoTextBox_Drop"
          HorizontalAlignment="Stretch" Margin="40,0,40,0" BorderBrush="PowderBlue" Background="LightGray"
          BorderThickness="1" VerticalScrollBarVisibility="Auto" 
          TextWrapping="Wrap" AcceptsReturn="True" 
-         Text="" VerticalAlignment="Stretch" DragOver="InfoTextBox_DragOver"   />
+         Text="" VerticalAlignment="Stretch"/>
 
-        <!--<StackPanel
+        <!--<StackPanel PreviewDrop ="InfoTextBox_Drop"
             x:Name="FileDropStackPanel"
             Grid.Row="1"
             Margin="40,0,40,0"

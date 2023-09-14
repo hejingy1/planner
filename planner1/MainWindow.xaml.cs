@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Net;
+using System.Text.RegularExpressions;
 
 namespace planner1
 {
@@ -34,7 +36,6 @@ namespace planner1
                 e.Effects = System.Windows.DragDropEffects.Copy;
             else
                 e.Effects = System.Windows.DragDropEffects.None;
-            Trace.WriteLine("Current Date and time is 1 : " + e);
             e.Handled = true;
         }
 
@@ -44,20 +45,20 @@ namespace planner1
             //    e.Effects = System.Windows.DragDropEffects.Copy;
             //else
             //    e.Effects = System.Windows.DragDropEffects.None;
-            //Trace.WriteLine("Current Date and time is 2 : " + e);
             //e.Handled = true;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            //InfoTextBox.Text = File.ReadAllText(filenames[0]);
-            string names = System.IO.Path.GetFileName(files[0]);
-            FileNameLabel.Content = names;
+            string url = e.Data.GetData(DataFormats.StringFormat).ToString();
+            if (url.Contains("\n")) url = url.Substring(0, url.IndexOf("\n"));
+            WebClient x = new WebClient();
+            string source = x.DownloadString("https://learn.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.stackpanel?view=winrt-22621");
+            string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",
+            RegexOptions.IgnoreCase).Groups["Title"].Value;
+            FileNameLabel.Content = title;
         }
 
         private void InfoTextBox_Drop(object sender, System.Windows.DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            //InfoTextBox.Text = File.ReadAllText(filenames[0]);
-            string names = System.IO.Path.GetFileName(files[0]);
-            FileNameLabel.Content = names;
+            string url = e.Data.GetData(DataFormats.StringFormat).ToString();
+            Trace.WriteLine("Current 1: " + url);
         }
 
         //private void FileDropStackPanel_Drop(object sender, DragEventArgs e)
