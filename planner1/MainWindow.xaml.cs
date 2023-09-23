@@ -26,24 +26,30 @@ namespace planner1
     public partial class MainWindow : Window
     {
         public List<string> JobKeyWords = new List<string>()
+
         {
             "linkedin", "career", "job"
         };
+        public string docPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public bool UrlIsAJob(string inputUrl)
+        public void UrlIsAJob(string inputUrl)
         {
+            string file = "";
             if (JobKeyWords.Any(inputUrl.Contains))
             {
-                return true;
+                file = "Working.txt";
             }
             else
             {
-                return false;
+                file = "Reading.txt";
             }
+            StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docPath, file), true);
+            outputFile.WriteLine(inputUrl);
+            outputFile.Close();
         }
 
         private void InfoTextBox_DragOver(object sender, System.Windows.DragEventArgs e)
@@ -73,9 +79,8 @@ namespace planner1
             {
                 string source = url_tilte.DownloadString(url);
                 string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",RegexOptions.IgnoreCase).Groups["Title"].Value;
-                Trace.WriteLine("the output is:\n" + UrlIsAJob(url));
                 FileNameLabel.Content = title;
-                
+                UrlIsAJob(url);
             }
             catch (Exception WebException)
             {
