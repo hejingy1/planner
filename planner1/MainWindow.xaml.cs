@@ -25,10 +25,25 @@ namespace planner1
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        public List<string> JobKeyWords = new List<string>()
+        {
+            "linkedin", "career", "job"
+        };
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public bool UrlIsAJob(string inputUrl)
+        {
+            if (JobKeyWords.Any(inputUrl.Contains))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void InfoTextBox_DragOver(object sender, System.Windows.DragEventArgs e)
@@ -58,8 +73,9 @@ namespace planner1
             {
                 string source = url_tilte.DownloadString(url);
                 string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",RegexOptions.IgnoreCase).Groups["Title"].Value;
+                Trace.WriteLine("the output is:\n" + UrlIsAJob(url));
                 FileNameLabel.Content = title;
-                Trace.WriteLine("The good Url:\n" + url);
+                
             }
             catch (Exception WebException)
             {
