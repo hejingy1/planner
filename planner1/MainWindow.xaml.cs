@@ -34,9 +34,10 @@ namespace planner1
         public MainWindow()
         {
             InitializeComponent();
+            this.Loaded += new RoutedEventHandler(Window_Loaded);
         }
 
-        public void UrlIsAJob(string inputUrl)
+        public void UrlIsAJob(string inputUrl, string tilte)
         {
             string file = "";
             if (JobKeyWords.Any(inputUrl.Contains))
@@ -48,8 +49,15 @@ namespace planner1
                 file = "Reading.txt";
             }
             StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docPath, file), true);
-            outputFile.WriteLine(inputUrl);
+            outputFile.WriteLine(inputUrl +"  "+ tilte);
             outputFile.Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var desktopWorkingArea = System.Windows.SystemParameters.WorkArea;
+            this.Left = desktopWorkingArea.Right - this.Width;
+            this.Top = desktopWorkingArea.Bottom - this.Height;
         }
 
         private void InfoTextBox_DragOver(object sender, System.Windows.DragEventArgs e)
@@ -79,10 +87,10 @@ namespace planner1
             {
                 string source = url_tilte.DownloadString(url);
                 string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>",RegexOptions.IgnoreCase).Groups["Title"].Value;
-                FileNameLabel.Content = title;
-                UrlIsAJob(url);
+                //FileNameLabel.Content = title;
+                UrlIsAJob(url, title);
             }
-            catch (Exception WebException)
+            catch (Exception ex)
             {
                 //Trace.WriteLine("something happend \n" + WebException.ToString());
                 Trace.WriteLine("The error Url:\n" + url);

@@ -5,23 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:planner1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="10">
+        Title="MainWindow" Height="150" Width="250" ResizeMode ="NoResize"
+		ShowInTaskbar ="False" Topmost ="True"
+		WindowStartupLocation="Manual">
+    <Grid Margin="1">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
 
-        <Label
+        <!--<Label
             x:Name="FileNameLabel"
             Grid.Row="0"
             HorizontalAlignment="Center"
             Content="wwre"
             FontSize="16">
 
-        </Label>
+        </Label>-->
 
         <TextBox x:Name="InfoTextBox"
          Grid.Row="1" 
@@ -29,7 +30,7 @@
          PreviewDragEnter="InfoTextBox_DragEnter" DragEnter="InfoTextBox_DragEnter"
          PreviewDragOver="InfoTextBox_DragOver" DragOver="InfoTextBox_DragOver"
          Drop="InfoTextBox_Drop"
-         HorizontalAlignment="Stretch" Margin="40,0,40,0" BorderBrush="PowderBlue" Background="LightGray"
+         HorizontalAlignment="Stretch" Margin="4,0,4,0" BorderBrush="PowderBlue" Background="LightGray"
          BorderThickness="1" VerticalScrollBarVisibility="Auto" 
          TextWrapping="Wrap" AcceptsReturn="True" 
          Text="" VerticalAlignment="Stretch"/>
